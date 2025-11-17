@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Search Console Verification (ajoutée comme demandé) -->
+    <meta name="google-site-verification" content="N76Ki7R_5WipE4tEOG2oZNNSlbvRVD88x3Zr5Uo7gxA" />
     <meta name="description" content="Co-Chan Anime Downloader - Téléchargeur VF/VOSTFR ultra-rapide via anime-sama et serveurs sibnet">
     <title>Co-Chan • Téléchargeur Anime VF & VOSTFR</title>
     <style>
@@ -373,10 +375,10 @@
     </footer>
 
     <script>
-        // === Année dynamique dans le footer ===
+        // Année dynamique (affichera 2025 en novembre 2025)
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // === Particules subtiles ===
+        // Particules subtiles
         const particles = document.getElementById('particles');
         for(let i = 0; i < 90; i++) {
             const p = document.createElement('div');
@@ -389,7 +391,7 @@
             particles.appendChild(p);
         }
 
-        // === FAQ accordéon ===
+        // FAQ accordéon
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 q.classList.toggle('active');
@@ -398,7 +400,7 @@
             });
         });
 
-        // === Smooth scroll ===
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
@@ -407,7 +409,7 @@
             });
         });
 
-        // === Effet navbar au scroll ===
+        // Effet navbar au scroll
         window.addEventListener('scroll', () => {
             document.getElementById('nav').style.background = 
                 window.scrollY > 50 ? 'rgba(10,10,10,0.99)' : 'rgba(10,10,10,0.97)';
