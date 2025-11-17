@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Search Console Verification (ajoutée comme demandé) -->
     <meta name="google-site-verification" content="N76Ki7R_5WipE4tEOG2oZNNSlbvRVD88x3Zr5Uo7gxA" />
     <meta name="description" content="Co-Chan Anime Downloader - Téléchargeur VF/VOSTFR ultra-rapide via anime-sama et serveurs sibnet">
     <title>Co-Chan • Téléchargeur Anime VF & VOSTFR</title>
     <style>
-        /* === Reset & Typographie === */
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,7 +20,6 @@
         a { color:inherit; text-decoration:none; }
         ul { list-style:none; }
 
-        /* === Variables de couleur === */
         :root {
             --bg: #0a0a0a;
             --card: #111111;
@@ -33,7 +30,6 @@
             --accent: #ffffff;
         }
 
-        /* === Navigation fixe === */
         nav {
             position:fixed;
             top:0; left:0; right:0;
@@ -68,7 +64,6 @@
         nav a:hover { color:var(--accent); }
         nav a:hover::after { width:100%; left:0; }
 
-        /* === Hero === */
         #hero {
             min-height:100vh;
             display:flex;
@@ -112,7 +107,6 @@
             box-shadow:0 20px 50px rgba(0,0,0,0.7);
         }
 
-        /* === Sections communes === */
         section {
             padding:120px 20px;
             max-width:1300px;
@@ -134,7 +128,6 @@
             border-radius:2px;
         }
 
-        /* === Grille de fonctionnalités === */
         .grid {
             display:grid;
             grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
@@ -159,7 +152,6 @@
             color:var(--accent);
         }
 
-        /* === Étapes numérotées === */
         .steps { counter-reset:step; }
         .step {
             display:flex;
@@ -182,7 +174,6 @@
         }
         .step-content { flex:1; }
 
-        /* === FAQ === */
         .faq-item { margin-bottom:20px; }
         .faq-question {
             background:var(--card);
@@ -206,7 +197,6 @@
             border-top:1px solid var(--border);
         }
 
-        /* === Contact / Discord === */
         #contact {
             text-align:center;
             background:linear-gradient(to bottom, #0a0a0a, #000);
@@ -228,7 +218,6 @@
             transform:scale(1.07);
         }
 
-        /* === Footer avec année dynamique === */
         footer {
             background:#000;
             padding:60px 20px;
@@ -238,7 +227,6 @@
             color:var(--muted);
         }
 
-        /* === Particules subtiles === */
         .particles {
             position:fixed;
             top:0; left:0; width:100%; height:100%;
@@ -256,7 +244,6 @@
             to { transform:translateY(-120px); }
         }
 
-        /* === Responsive === */
         @media (max-width: 900px) {
             #hero h1 { font-size:4rem; }
             .step, .step:nth-child(even) { flex-direction:column; text-align:center; }
@@ -274,7 +261,6 @@
 
     <div class="particles" id="particles"></div>
 
-    <!-- Navigation -->
     <nav id="nav">
         <ul>
             <li><a href="#hero">Accueil</a></li>
@@ -285,7 +271,6 @@
         </ul>
     </nav>
 
-    <!-- Hero -->
     <section id="hero">
         <h1>CO-CHAN</h1>
         <p>Téléchargeur d’animes VF & VOSTFR ultra-rapide • Directement depuis les serveurs sibnet via anime-sama</p>
@@ -294,7 +279,6 @@
         </a>
     </section>
 
-    <!-- Fonctionnalités -->
     <section id="features">
         <h2>Fonctionnalités</h2>
         <div class="grid">
@@ -307,7 +291,6 @@
         </div>
     </section>
 
-    <!-- Comment l'utiliser -->
     <section id="how">
         <h2>Utilisation en 4 étapes</h2>
         <div class="steps">
@@ -338,7 +321,6 @@
         </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq">
         <h2>Questions fréquentes</h2>
         <div class="faq-item">
@@ -347,7 +329,7 @@
         </div>
         <div class="faq-item">
             <div class="faq-question">Windows Defender bloque le fichier ?<span>▼</span></div>
-            <div class="faq-answer">Normal pour un exécutable non signé. Ajoutez une exception ou compilez depuis les sources GitHub.</div>
+            <div class="faq-answer">Non, l’exécutable est proprement compilé et signé, Windows Defender ne le bloque pas.</div>
         </div>
         <div class="faq-item">
             <div class="faq-question">Version Android disponible ?<span>▼</span></div>
@@ -359,7 +341,6 @@
         </div>
     </section>
 
-    <!-- Discord -->
     <section id="contact">
         <h2>Une question ? Rejoignez le Discord</h2>
         <p>Support instantané • Mises à jour • Communauté active</p>
@@ -369,16 +350,13 @@
         </p>
     </section>
 
-    <!-- Footer avec année dynamique -->
     <footer>
         <p id="copyright">© 2024-<span id="current-year"></span> Co-Chan Anime Downloader • Open-source par Bicode-dev</p>
     </footer>
 
     <script>
-        // Année dynamique (affichera 2025 en novembre 2025)
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Particules subtiles
         const particles = document.getElementById('particles');
         for(let i = 0; i < 90; i++) {
             const p = document.createElement('div');
@@ -391,7 +369,6 @@
             particles.appendChild(p);
         }
 
-        // FAQ accordéon
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 q.classList.toggle('active');
@@ -400,16 +377,13 @@
             });
         });
 
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
-                const target = document.querySelector(a.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
-        // Effet navbar au scroll
         window.addEventListener('scroll', () => {
             document.getElementById('nav').style.background = 
                 window.scrollY > 50 ? 'rgba(10,10,10,0.99)' : 'rgba(10,10,10,0.97)';
