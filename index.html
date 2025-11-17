@@ -3,101 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Site officiel de Co-Chan Anime Downloader - Téléchargez vos animes préférés facilement et rapidement.">
-    <meta name="keywords" content="anime downloader, Co-Chan, téléchargement anime, VF, VOSTFR, anime-sama">
-    <meta name="author" content="Bicode-dev">
-    <title>Co-Chan Anime Downloader - Site Officiel</title>
+    <meta name="description" content="Co-Chan Anime Downloader - Téléchargez vos animes VF/VOSTFR rapidement et simplement">
+    <title>Co-Chan Anime Downloader - Téléchargement Direct</title>
     <style>
-        /* Reset and Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* Reset & Police */
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #ffffff;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #0e0e0e;
+            color: #e0e0e0;
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
+        }
+        a { color: #ffffff; text-decoration: none; }
+        a:hover { color: #aaaaaa; }
+
+        /* Dégradés sobres noir/blanc/gris */
+        :root {
+            --bg: #0e0e0e;
+            --card: #181818;
+            --border: #333333;
+            --text: #e0e0e0;
+            --accent: #ffffff;
+            --light: #aaaaaa;
         }
 
-        /* Animated Background */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Navigation Bar */
+        /* Navigation fixe */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px 0;
+            top: 0; left: 0; right: 0;
+            background: rgba(14,14,14,0.95);
+            backdrop-filter: blur(10px);
             z-index: 1000;
-            transition: background 0.3s;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
         }
-
-        nav.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-        }
-
         nav ul {
-            list-style: none;
             display: flex;
             justify-content: center;
+            list-style: none;
         }
-
-        nav li {
-            margin: 0 20px;
-        }
-
+        nav li { margin: 0 25px; }
         nav a {
-            color: #fff;
-            text-decoration: none;
+            font-weight: 500;
             font-size: 1.1em;
             transition: color 0.3s;
         }
+        nav a:hover { color: var(--accent); }
 
-        nav a:hover {
-            color: #ff00ff;
-        }
-
-        /* Hero Section */
+        /* Hero */
         #hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            position: relative;
+            background: linear-gradient(to bottom, #0e0e0e 0%, #1a1a1a 100%);
+        }
+        #hero h1 {
+            font-size: 4.5em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffffff, #aaaaaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #hero p {
+            font-size: 1.4em;
+            max-width: 800px;
+            margin-bottom: 50px;
+            color: var(--light);
         }
 
-        #hero h1 {
+        /* Bouton principal */
+        .btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.3em;
+            border-radius: 50px;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Sections génériques */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: #ffffff;
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        /* Grille fonctionnalités */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #666;
+        }
+        .card h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        /* Étapes */
+        .steps {
+            counter-reset: step;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            background: var(--card);
+            padding: 40px;
+            border-radius: 12px;
+            border-left: 5px solid #ffffff;
+        }
+        .step:nth-child(even) { flex-direction: row-reverse; }
+        .step::before {
+            counter-increment: step;
+            content: "0" counter(step);
             font-size: 4em;
+            font-weight: bold;
+            color: #333;
+            margin-right: 20px;
+        }
+
+        /* Captures d'écran */
+        .gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .gallery img {
+            height: 200px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            transition: border 0.3s;
+        }
+        .gallery img:hover { border-color: #fff; }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 15px;
+        }
+        .faq-question {
+            background: var(--card);
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+        .faq-answer {
+            display: none;
+            padding: 20px;
+            background: #222;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* Section Contact → Redirection Discord */
+        #contact {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(to bottom, #111, #000);
+        }
+        #contact h2 { margin-bottom: 40px; }
+        .discord-btn {
+            display: inline-block;
+            padding: 20px 60px;
+            background: #5865F2;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 50px;
+            margin: 30px 0;
+            transition: all 0.3s;
+        }
+        .discord-btn:hover {
+            background: #4752c4;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        footer a { color: var(--light); }
+
+        /* Particules subtiles gris/noir */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.07);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        @keyframes float {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-100px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #hero h1 { font-size: 3em; }
+            .step { flex-direction: column !important; text-align: center; }
+            .step::before { margin: 0 auto 20px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <ul>
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="#how">Utilisation</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact / Discord</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <h1>CO-CHAN</h1>
+        <p>Téléchargeur d’animes VF & VOSTFR ultra-rapide via anime-sama et serveurs sibnet</p>
+        <a href="https://github.com/Bicode-dev/anime_Co-Chan_download/releases/download/Co-Chan/Co-Chan.exe" class="btn">TÉLÉCHARGER CO-CHAN.EXE</a>
+    </section>
+
+    <section id="features">
+        <h2>Fonctionnalités</h2>
+        <div class="grid">
+            <div class="card"><h3>Téléchargement direct</h3><p>Extraction depuis les serveurs russes (sibnet) sans intermédiaire</p></div>
+            <div class="card"><h3>VF & VOSTFR</h3><p>Choix entre version française et sous-titres français</p></div>
+            <div class="card"><h3>Simple d’usage</h3><p>Une seule ligne de commande : nom de l’anime + version</p></div>
+            <div class="card"><h3>Multi-plateforme</h3><p>Windows natif • Android via Termux</p></div>
+            <div class="card"><h3>Open source</h3><p>Code 100 % transparent sur GitHub</p></div>
+            <div class="card"><h3>Gratuit à vie</h3><p>Aucune pub, aucun paywall</p></div>
+        </div>
+    </section>
+
+    <section id="how">
+        <h2>Comment l’utiliser</h2>
+        <div class="steps">
+            <div class="step">
+                <div><h3>Téléchargez l’exécutable</h3><p>Cliquez sur le gros bouton en haut ou utilisez le lien direct GitHub</p></div>
+            </div>
+            <div class="step">
+                <div><h3>Lancez Co-Chan.exe</h3><p>Aucune installation requise (portable)</p></div>
+            </div>
+            <div class="step">
+                <div><h3>Tapez le nom de l’anime</h3><p>Exemple : <code>one piece vf</code> ou <code>attack on titan vostfr</code></p></div>
+            </div>
+            <div class="step">
+                <div><h3>Profitez</h3><p>Les épisodes sont téléchargés dans le dossier courant</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>Questions fréquentes</h2>
+        <div class="faq-item">
+            <div class="faq-question">Est-ce légal ?<span>▼</span></div>
+            <div class="faq-answer">Co-Chan ne fait que télécharger des fichiers déjà hébergés publiquement. L’usage reste sous votre responsabilité.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Pourquoi sibnet ?<span>▼</span></div>
+            <div class="faq-answer">Serveurs russes très rapides et rarement limités en bande passante.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Windows Defender bloque le .exe ?<span>▼</span></div>
+            <div class="faq-answer">C’est normal pour un outil non signé. Ajoutez une exception ou compilez vous-même depuis le repo GitHub.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Version Android ?<span>▼</span></div>
+            <div class="faq-answer">Oui, via Termux → script d’installation disponible dans le repo.</div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Une question ? Rejoignez-nous sur Discord</h2>
+        <p>Support en direct • Mises à jour • Discussion avec la communauté</p>
+        <a href="https://discord.com/invite/tv2EZEYbax" target="_blank" class="discord-btn">REJOINDRE LE DISCORD</a>
+        <p style="margin-top:40px; color:#888;">
+            <small>Ou consultez le GitHub pour les sources et les issues</small><br>
+            <a href="https://github.com/Bicode-dev/anime_Co-Chan_download" target="_blank">github.com/Bicode-dev/anime_Co-Chan_download</a>
+        </p>
+    </section>
+
+    <footer>
+        <p>© 2024-2025 Co-Chan Anime Downloader • Projet open-source par Bicode-dev</p>
+    </footer>
+
+    <script>
+        // Particules subtiles
+        const particlesContainer = document.getElementById('particles');
+        for(let i=0; i<80; i++){
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.width = p.style.height = Math.random()*4 + 2 + 'px';
+            p.style.left = Math.random()*100 + '%';
+            p.style.animationDuration = Math.random()*20 + 15 + 's';
+            p.style.animationDelay = Math.random()*10 + 's';
+            particlesContainer.appendChild(p);
+        }
+
+        // FAQ accordéon
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>            font-size: 4em;
             margin-bottom: 20px;
             animation: fadeInDown 1s ease-out;
         }
