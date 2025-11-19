@@ -129,7 +129,7 @@
         border-radius:60px;
         transition:all 0.4s ease;
         box-shadow:0 12px 40px rgba(169,169,169,0.3);
-        animation: pulse 2s infinite, rotateBtn 5s infinite linear;
+        animation: pulse 2s infinite;
     }
     .btn-primary:hover {
         background:var(--secondary);
@@ -140,10 +140,6 @@
         0% { transform: scale(1); }
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
-    }
-    @keyframes rotateBtn {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
     }
 
     section {
@@ -198,10 +194,10 @@
         transition:all 0.35s ease;
         text-align:center;
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        animation: cardAnim 1.5s ease-in-out infinite alternate, cardRotate 10s infinite linear;
+        animation: cardAnim 1.5s ease-in-out infinite alternate;
     }
     .card:hover {
-        transform:translateY(-12px) rotate(5deg);
+        transform:translateY(-12px);
         border-color:var(--secondary);
         box-shadow:0 15px 40px rgba(135,206,235,0.3);
     }
@@ -214,10 +210,6 @@
     @keyframes cardAnim {
         from { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         to { box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-    }
-    @keyframes cardRotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
     }
     @keyframes colorShift {
         from { color: var(--accent); }
@@ -245,7 +237,6 @@
         font-weight:900;
         color:var(--border);
         opacity:0.8;
-        animation: numSpin 5s infinite linear;
     }
     .step-content { flex:1; }
     @keyframes slideIn {
@@ -256,10 +247,6 @@
         0% { transform: scale(1); }
         50% { transform: scale(1.02); }
         100% { transform: scale(1); }
-    }
-    @keyframes numSpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
     }
 
     .faq-item { margin-bottom:20px; animation: fadeIn 1s ease-in, faqBounce 2s infinite; }
@@ -378,16 +365,12 @@
         background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z" fill="%23a9a9a9"/></svg>') no-repeat center/cover;
         width: 20px;
         height: 20px;
-        animation: fall 10s linear infinite, petalSpin 3s infinite linear;
+        animation: fall 10s linear infinite;
         opacity: 0.8;
     }
     @keyframes fall {
         0% { transform: translateY(-100%) rotate(0deg); }
         100% { transform: translateY(100vh) rotate(360deg); }
-    }
-    @keyframes petalSpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(720deg); }
     }
 
     @media (max-width: 900px) {
