@@ -30,7 +30,7 @@
         --text: #e0e0e0;
         --muted: #888888;
         --light: #aaaaaa;
-        --accent: #ff69b4;
+        --accent: #a9a9a9;
         --secondary: #87ceeb;
     }
 
@@ -43,6 +43,11 @@
         padding:18px 0;
         border-bottom:1px solid var(--border);
         transition:all 0.3s;
+        animation: navSlide 1s ease-out;
+    }
+    @keyframes navSlide {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(0); }
     }
     nav ul {
         display:flex;
@@ -55,8 +60,12 @@
         font-size:1.05rem;
         padding:8px 0;
         position:relative;
-        transition:color 0.3s;
+        transition:color 0.3s, transform 0.3s;
         color: var(--accent);
+    }
+    nav a:hover {
+        color:var(--secondary);
+        transform: scale(1.1);
     }
     nav a::after {
         content:'';
@@ -66,7 +75,6 @@
         background:var(--secondary);
         transition:width 0.3s, left 0.3s;
     }
-    nav a:hover { color:var(--secondary); }
     nav a:hover::after { width:100%; left:0; }
 
     #hero {
@@ -90,17 +98,26 @@
         -webkit-background-clip:text;
         -webkit-text-fill-color:transparent;
         user-select:none;
-        animation: glow 2s ease-in-out infinite alternate;
+        animation: glow 2s ease-in-out infinite alternate, bounce 2s infinite;
     }
     @keyframes glow {
         from { text-shadow: 0 0 10px var(--accent); }
         to { text-shadow: 0 0 20px var(--secondary); }
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
     }
     #hero p {
         font-size:1.5rem;
         max-width:900px;
         margin-bottom:50px;
         color:var(--light);
+        animation: fadeInText 2s ease-in;
+    }
+    @keyframes fadeInText {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
     }
     .btn-primary {
         display:inline-block;
@@ -111,8 +128,8 @@
         font-weight:bold;
         border-radius:60px;
         transition:all 0.4s ease;
-        box-shadow:0 12px 40px rgba(255,105,180,0.3);
-        animation: pulse 2s infinite;
+        box-shadow:0 12px 40px rgba(169,169,169,0.3);
+        animation: pulse 2s infinite, rotateBtn 5s infinite linear;
     }
     .btn-primary:hover {
         background:var(--secondary);
@@ -124,6 +141,10 @@
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
     }
+    @keyframes rotateBtn {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
     section {
         padding:120px 20px;
@@ -131,6 +152,11 @@
         margin:0 auto;
         position: relative;
         z-index: 10;
+        animation: sectionFade 1.5s ease-in;
+    }
+    @keyframes sectionFade {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
     h2 {
         font-size:3.2rem;
@@ -138,7 +164,7 @@
         margin-bottom:70px;
         position:relative;
         color: var(--accent);
-        animation: fadeIn 1s ease-in;
+        animation: fadeIn 1s ease-in, textWave 3s infinite;
     }
     h2::after {
         content:'';
@@ -152,6 +178,11 @@
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-20px); }
         to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes textWave {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0); }
     }
 
     .grid {
@@ -167,10 +198,10 @@
         transition:all 0.35s ease;
         text-align:center;
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        animation: cardAnim 1.5s ease-in-out infinite alternate;
+        animation: cardAnim 1.5s ease-in-out infinite alternate, cardRotate 10s infinite linear;
     }
     .card:hover {
-        transform:translateY(-12px);
+        transform:translateY(-12px) rotate(5deg);
         border-color:var(--secondary);
         box-shadow:0 15px 40px rgba(135,206,235,0.3);
     }
@@ -178,10 +209,19 @@
         font-size:1.7rem;
         margin:20px 0 15px;
         color:var(--accent);
+        animation: colorShift 3s infinite alternate;
     }
     @keyframes cardAnim {
         from { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         to { box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    }
+    @keyframes cardRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes colorShift {
+        from { color: var(--accent); }
+        to { color: var(--secondary); }
     }
 
     .steps { counter-reset:step; }
@@ -195,7 +235,7 @@
         border-radius:16px;
         border-left:6px solid var(--accent);
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        animation: slideIn 1s ease-out;
+        animation: slideIn 1s ease-out, stepPulse 2s infinite;
     }
     .step:nth-child(even) { flex-direction:row-reverse; }
     .step::before {
@@ -205,14 +245,24 @@
         font-weight:900;
         color:var(--border);
         opacity:0.8;
+        animation: numSpin 5s infinite linear;
     }
     .step-content { flex:1; }
     @keyframes slideIn {
         from { opacity: 0; transform: translateX(-50px); }
         to { opacity: 1; transform: translateX(0); }
     }
+    @keyframes stepPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+    @keyframes numSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 
-    .faq-item { margin-bottom:20px; animation: fadeIn 1s ease-in; }
+    .faq-item { margin-bottom:20px; animation: fadeIn 1s ease-in, faqBounce 2s infinite; }
     .faq-question {
         background:var(--card);
         padding:22px;
@@ -222,11 +272,11 @@
         display:flex;
         justify-content:space-between;
         align-items:center;
-        transition:background 0.3s;
+        transition:background 0.3s, transform 0.3s;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .faq-question:hover { background:#444444; }
-    .faq-question span { font-size:1.4rem; transition:transform 0.3s; color: var(--accent); }
+    .faq-question:hover { background:#444444; transform: scale(1.02); }
+    .faq-question span { font-size:1.4rem; transition:transform 0.3s; color: var(--accent); animation: arrowWiggle 1s infinite; }
     .faq-question.active span { transform:rotate(180deg); }
     .faq-answer {
         display:none;
@@ -235,6 +285,19 @@
         border-radius:0 0 12px 12px;
         border-top:1px solid var(--border);
         color: var(--text);
+        animation: answerExpand 0.5s ease-in;
+    }
+    @keyframes faqBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+    @keyframes arrowWiggle {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(10deg); }
+    }
+    @keyframes answerExpand {
+        from { max-height: 0; opacity: 0; }
+        to { max-height: 500px; opacity: 1; }
     }
 
     #contact {
@@ -253,12 +316,17 @@
         margin:40px 0;
         transition:all 0.4s;
         box-shadow:0 12px 40px rgba(135,206,235,0.3);
-        animation: pulse 2s infinite;
+        animation: pulse 2s infinite, discordShake 3s infinite;
     }
     .discord-btn:hover {
         background:var(--accent);
         transform:scale(1.07);
-        box-shadow:0 20px 50px rgba(255,105,180,0.4);
+        box-shadow:0 20px 50px rgba(169,169,169,0.4);
+    }
+    @keyframes discordShake {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(5deg); }
+        75% { transform: rotate(-5deg); }
     }
 
     footer {
@@ -268,6 +336,11 @@
         border-top:1px solid var(--border);
         font-size:0.95rem;
         color:var(--muted);
+        animation: footerFade 2s ease-in;
+    }
+    @keyframes footerFade {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .stars {
@@ -281,12 +354,16 @@
         position:absolute;
         background: #ffffff;
         border-radius:50%;
-        animation: twinkle 5s infinite;
+        animation: twinkle 5s infinite, starMove 10s infinite linear;
         opacity: 0.8;
     }
     @keyframes twinkle {
         0%, 100% { opacity: 0.8; }
         50% { opacity: 0.2; }
+    }
+    @keyframes starMove {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(20px); }
     }
 
     .sakura {
@@ -298,15 +375,19 @@
     }
     .petal {
         position:absolute;
-        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z" fill="%23FFB6C1"/></svg>') no-repeat center/cover;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40z" fill="%23a9a9a9"/></svg>') no-repeat center/cover;
         width: 20px;
         height: 20px;
-        animation: fall 10s linear infinite;
+        animation: fall 10s linear infinite, petalSpin 3s infinite linear;
         opacity: 0.8;
     }
     @keyframes fall {
         0% { transform: translateY(-100%) rotate(0deg); }
         100% { transform: translateY(100vh) rotate(360deg); }
+    }
+    @keyframes petalSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(720deg); }
     }
 
     @media (max-width: 900px) {
