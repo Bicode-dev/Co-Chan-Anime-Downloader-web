@@ -9,385 +9,669 @@
     <style>
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background:#0a0a0a;
-            color:#e0e0e0;
+            margin: 0;
+            overflow: hidden;
+            background: #000000;
+            font-family: 'Courier New', monospace;
+            color: #888888;
             line-height:1.6;
             min-height:100vh;
             position:relative;
             overflow-x:hidden;
         }
-        a { color:inherit; text-decoration:none; }
-        ul { list-style:none; }
 
-        :root {
-            --bg: #0a0a0a;
-            --card: #111111;
-            --border: #222222;
-            --text: #e0e0e0;
-            --muted: #888888;
-            --light: #aaaaaa;
-            --accent: #ffffff;
-        }
+    a { color:inherit; text-decoration:none; }
+    ul { list-style:none; }
 
-        nav {
-            position:fixed;
-            top:0; left:0; right:0;
-            background:rgba(10,10,10,0.97);
-            backdrop-filter:blur(12px);
-            z-index:1000;
-            padding:18px 0;
-            border-bottom:1px solid var(--border);
-            transition:all 0.3s;
-        }
-        nav ul {
-            display:flex;
-            justify-content:center;
-            gap:40px;
-            flex-wrap:wrap;
-        }
-        nav a {
-            font-weight:600;
-            font-size:1.05rem;
-            padding:8px 0;
-            position:relative;
-            transition:color 0.3s;
-        }
-        nav a::after {
-            content:'';
-            position:absolute;
-            width:0; height:2px;
-            bottom:0; left:50%;
-            background:var(--accent);
-            transition:width 0.3s, left 0.3s;
-        }
-        nav a:hover { color:var(--accent); }
-        nav a:hover::after { width:100%; left:0; }
+    canvas {
+        display: block;
+    }
 
-        #hero {
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:0 20px;
-            background:linear-gradient(to bottom, #0a0a0a 0%, #151515 100%);
-        }
-        #hero h1 {
-            font-size:5.5rem;
-            font-weight:900;
-            letter-spacing:4px;
-            margin-bottom:16px;
-            background:linear-gradient(90deg, #ffffff, #bbbbbb);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            user-select:none;
-        }
-        #hero p {
-            font-size:1.5rem;
-            max-width:900px;
-            margin-bottom:50px;
-            color:var(--light);
-        }
-        .btn-primary {
-            display:inline-block;
-            padding:20px 60px;
-            background:#ffffff;
-            color:#000000;
-            font-size:1.4rem;
-            font-weight:bold;
-            border-radius:60px;
-            transition:all 0.4s ease;
-            box-shadow:0 12px 40px rgba(0,0,0,0.6);
-        }
-        .btn-primary:hover {
-            background:#dddddd;
-            transform:translateY(-6px);
-            box-shadow:0 20px 50px rgba(0,0,0,0.7);
-        }
+    #codeRain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
 
-        section {
-            padding:120px 20px;
-            max-width:1300px;
-            margin:0 auto;
-        }
-        h2 {
-            font-size:3.2rem;
-            text-align:center;
-            margin-bottom:70px;
-            position:relative;
-        }
-        h2::after {
-            content:'';
-            width:120px;
-            height:4px;
-            background:var(--accent);
-            display:block;
-            margin:20px auto 0;
-            border-radius:2px;
-        }
+    #glitchText {
+        position: relative;
+        color: #ffffff;
+        font-size: 48px;
+        font-weight: bold;
+        text-shadow: 0 0 20px #888888, 0 0 40px #666666, 2px 2px 0 #aaaaaa, -2px -2px 0 #555555;
+        letter-spacing: 5px;
+        z-index: 10;
+        animation: glitch 0.3s infinite;
+    }
 
-        .grid {
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
-            gap:35px;
-        }
-        .card {
-            background:var(--card);
-            padding:45px 35px;
-            border-radius:16px;
-            border:1px solid var(--border);
-            transition:all 0.35s ease;
-            text-align:center;
-        }
-        .card:hover {
-            transform:translateY(-12px);
-            border-color:#555;
-            box-shadow:0 15px 40px rgba(0,0,0,0.5);
-        }
-        .card h3 {
-            font-size:1.7rem;
-            margin:20px 0 15px;
-            color:var(--accent);
-        }
+    @keyframes glitch {
+        0% { transform: skew(0deg); }
+        20% { transform: skew(2deg); }
+        40% { transform: skew(-2deg); }
+        60% { transform: skew(1deg); }
+        80% { transform: skew(-1deg); }
+        100% { transform: skew(0deg); }
+    }
 
-        .steps { counter-reset:step; }
-        .step {
-            display:flex;
-            align-items:center;
-            gap:50px;
-            margin-bottom:80px;
-            background:var(--card);
-            padding:50px;
-            border-radius:16px;
-            border-left:6px solid var(--accent);
-        }
-        .step:nth-child(even) { flex-direction:row-reverse; }
-        .step::before {
-            counter-increment:step;
-            content:"0" counter(step);
-            font-size:5rem;
-            font-weight:900;
-            color:#222;
-            opacity:0.8;
-        }
-        .step-content { flex:1; }
+    #error {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: #888888;
+        font-size: 14px;
+        opacity: 0.7;
+        z-index: 10;
+    }
 
-        .faq-item { margin-bottom:20px; }
-        .faq-question {
-            background:var(--card);
-            padding:22px;
-            cursor:pointer;
-            border-radius:12px;
-            font-weight:600;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            transition:background 0.3s;
-        }
-        .faq-question:hover { background:#1a1a1a; }
-        .faq-question span { font-size:1.4rem; transition:transform 0.3s; }
-        .faq-question.active span { transform:rotate(180deg); }
-        .faq-answer {
-            display:none;
-            padding:25px;
-            background:#181818;
-            border-radius:0 0 12px 12px;
-            border-top:1px solid var(--border);
-        }
+    nav {
+        position:fixed;
+        top:0; left:0; right:0;
+        background:rgba(0,0,0,0.97);
+        backdrop-filter:blur(12px);
+        z-index:1000;
+        padding:18px 0;
+        border-bottom:1px solid #222222;
+        transition:all 0.3s;
+    }
+    nav ul {
+        display:flex;
+        justify-content:center;
+        gap:40px;
+        flex-wrap:wrap;
+    }
+    nav a {
+        font-weight:600;
+        font-size:1.05rem;
+        padding:8px 0;
+        position:relative;
+        transition:color 0.3s;
+        color: #888888;
+    }
+    nav a::after {
+        content:'';
+        position:absolute;
+        width:0; height:2px;
+        bottom:0; left:50%;
+        background:#ffffff;
+        transition:width 0.3s, left 0.3s;
+    }
+    nav a:hover { color:#ffffff; }
+    nav a:hover::after { width:100%; left:0; }
 
-        #contact {
-            text-align:center;
-            background:linear-gradient(to bottom, #0a0a0a, #000);
-            padding:140px 20px;
-        }
-        .discord-btn {
-            display:inline-block;
-            padding:22px 70px;
-            background:#5865F2;
-            color:#ffffff;
-            font-size:1.6rem;
-            font-weight:bold;
-            border-radius:60px;
-            margin:40px 0;
-            transition:all 0.4s;
-        }
-        .discord-btn:hover {
-            background:#4752c4;
-            transform:scale(1.07);
-        }
+    #hero {
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        padding:0 20px;
+        background:#000000;
+        position: relative;
+        z-index: 10;
+    }
+    #hero h1 {
+        font-size:5.5rem;
+        font-weight:900;
+        letter-spacing:4px;
+        margin-bottom:16px;
+        color: #ffffff;
+        user-select:none;
+    }
+    #hero p {
+        font-size:1.5rem;
+        max-width:900px;
+        margin-bottom:50px;
+        color:#aaaaaa;
+    }
+    .btn-primary {
+        display:inline-block;
+        padding:20px 60px;
+        background:#666666;
+        color:#ffffff;
+        font-size:1.4rem;
+        font-weight:bold;
+        border-radius:60px;
+        transition:all 0.4s ease;
+        box-shadow:0 12px 40px rgba(0,0,0,0.6);
+    }
+    .btn-primary:hover {
+        background:#888888;
+        transform:translateY(-6px);
+        box-shadow:0 20px 50px rgba(0,0,0,0.7);
+    }
 
-        footer {
-            background:#000;
-            padding:60px 20px;
-            text-align:center;
-            border-top:1px solid var(--border);
-            font-size:0.95rem;
-            color:var(--muted);
-        }
+    section {
+        padding:120px 20px;
+        max-width:1300px;
+        margin:0 auto;
+        position: relative;
+        z-index: 10;
+        color: #ffffff;
+    }
+    h2 {
+        font-size:3.2rem;
+        text-align:center;
+        margin-bottom:70px;
+        position:relative;
+        color: #ffffff;
+    }
+    h2::after {
+        content:'';
+        width:120px;
+        height:4px;
+        background:#ffffff;
+        display:block;
+        margin:20px auto 0;
+        border-radius:2px;
+    }
 
-        .particles {
-            position:fixed;
-            top:0; left:0; width:100%; height:100%;
-            pointer-events:none;
-            z-index:1;
-        }
-        .particle {
-            position:absolute;
-            background:rgba(255,255,255,0.06);
-            border-radius:50%;
-            animation:float 22s infinite linear;
-        }
-        @keyframes float {
-            from { transform:translateY(100vh); }
-            to { transform:translateY(-120px); }
-        }
+    .grid {
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+        gap:35px;
+    }
+    .card {
+        background:#1a1a1a;
+        padding:45px 35px;
+        border-radius:16px;
+        border:1px solid #222222;
+        transition:all 0.35s ease;
+        text-align:center;
+    }
+    .card:hover {
+        transform:translateY(-12px);
+        border-color:#555555;
+        box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    }
+    .card h3 {
+        font-size:1.7rem;
+        margin:20px 0 15px;
+        color:#ffffff;
+    }
 
-        @media (max-width: 900px) {
-            #hero h1 { font-size:4rem; }
-            .step, .step:nth-child(even) { flex-direction:column; text-align:center; }
-            .step::before { margin-bottom:20px; }
-            nav ul { gap:20px; }
-        }
-        @media (max-width: 600px) {
-            #hero h1 { font-size:3.2rem; }
-            #hero p { font-size:1.2rem; }
-            .btn-primary { padding:16px 40px; font-size:1.2rem; }
-        }
-    </style>
-</head>
+    .steps { counter-reset:step; }
+    .step {
+        display:flex;
+        align-items:center;
+        gap:50px;
+        margin-bottom:80px;
+        background:#1a1a1a;
+        padding:50px;
+        border-radius:16px;
+        border-left:6px solid #ffffff;
+    }
+    .step:nth-child(even) { flex-direction:row-reverse; }
+    .step::before {
+        counter-increment:step;
+        content:"0" counter(step);
+        font-size:5rem;
+        font-weight:900;
+        color:#222222;
+        opacity:0.8;
+    }
+    .step-content { flex:1; }
+
+    .faq-item { margin-bottom:20px; }
+    .faq-question {
+        background:#1a1a1a;
+        padding:22px;
+        cursor:pointer;
+        border-radius:12px;
+        font-weight:600;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        transition:background 0.3s;
+        color: #ffffff;
+    }
+    .faq-question:hover { background:#333333; }
+    .faq-question span { font-size:1.4rem; transition:transform 0.3s; }
+    .faq-question.active span { transform:rotate(180deg); }
+    .faq-answer {
+        display:none;
+        padding:25px;
+        background:#333333;
+        border-radius:0 0 12px 12px;
+        border-top:1px solid #222222;
+        color: #aaaaaa;
+    }
+
+    #contact {
+        text-align:center;
+        background:#000000;
+        padding:140px 20px;
+    }
+    .discord-btn {
+        display:inline-block;
+        padding:22px 70px;
+        background:#666666;
+        color:#ffffff;
+        font-size:1.6rem;
+        font-weight:bold;
+        border-radius:60px;
+        margin:40px 0;
+        transition:all 0.4s;
+    }
+    .discord-btn:hover {
+        background:#888888;
+        transform:scale(1.07);
+    }
+
+    footer {
+        background:#000000;
+        padding:60px 20px;
+        text-align:center;
+        border-top:1px solid #222222;
+        font-size:0.95rem;
+        color:#888888;
+        position: relative;
+        z-index: 10;
+    }
+
+    .particles {
+        position:fixed;
+        top:0; left:0; width:100%; height:100%;
+        pointer-events:none;
+        z-index:1;
+    }
+    .particle {
+        position:absolute;
+        background:rgba(255,255,255,0.06);
+        border-radius:50%;
+        animation:float 22s infinite linear;
+    }
+    @keyframes float {
+        from { transform:translateY(100vh); }
+        to { transform:translateY(-120px); }
+    }
+
+    @media (max-width: 900px) {
+        #hero h1 { font-size:4rem; }
+        .step, .step:nth-child(even) { flex-direction:column; text-align:center; }
+        .step::before { margin-bottom:20px; }
+        nav ul { gap:20px; }
+    }
+    @media (max-width: 600px) {
+        #hero h1 { font-size:3.2rem; }
+        #hero p { font-size:1.2rem; }
+        .btn-primary { padding:16px 40px; font-size:1.2rem; }
+    }
+</style></head>
 <body>
 
-    <div class="particles" id="particles"></div>
+<canvas id="codeRain"></canvas>
 
-    <nav id="nav">
-        <ul>
-            <li><a href="#hero">Accueil</a></li>
-            <li><a href="#features">Fonctionnalités</a></li>
-            <li><a href="#how">Utilisation</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#contact">Discord</a></li>
-        </ul>
-    </nav>
+<div class="particles" id="particles"></div>
 
-    <section id="hero">
-        <h1>CO-CHAN</h1>
-        <p>Téléchargeur d’animes VF & VOSTFR ultra-rapide • Directement depuis les serveurs sibnet via anime-sama</p>
-        <a href="https://github.com/Bicode-dev/anime_Co-Chan_download/releases/download/Co-Chan/Co-Chan.exe" class="btn-primary">
-            TÉLÉCHARGER CO-CHAN.EXE
-        </a>
-    </section>
+<nav id="nav">
+    <ul>
+        <li><a href="#hero">Accueil</a></li>
+        <li><a href="#features">Fonctionnalités</a></li>
+        <li><a href="#how">Utilisation</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Discord</a></li>
+    </ul>
+</nav>
 
-    <section id="features">
-        <h2>Fonctionnalités</h2>
-        <div class="grid">
-            <div class="card"><h3>Vitesse maximale</h3><p>Téléchargement direct depuis serveurs russes (sibnet) sans limitation</p></div>
-            <div class="card"><h3>VF & VOSTFR</h3><p>Choix instantané entre version française et sous-titres français</p></div>
-            <div class="card"><h3>Ultra-simple</h3><p>Une commande : nom de l’anime + version</p></div>
-            <div class="card"><h3>Portable</h3><p>Aucun installation • Windows & Android (Termux)</p></div>
-            <div class="card"><h3>Open Source</h3><p>Code 100% transparent sur GitHub</p></div>
-            <div class="card"><h3>Gratuit à vie</h3><p>Zéro pub • Zéro paywall</p></div>
-        </div>
-    </section>
+<section id="hero">
+    <h1 id="glitchText">CO-CHAN</h1>
+    <p>Téléchargeur d’animes VF & VOSTFR ultra-rapide • Directement depuis les serveurs sibnet via anime-sama</p>
+    <a href="https://github.com/Bicode-dev/anime_Co-Chan_download/releases/download/Co-Chan/Co-Chan.exe" class="btn-primary">
+        TÉLÉCHARGER CO-CHAN.EXE
+    </a>
+</section>
 
-    <section id="how">
-        <h2>Utilisation en 4 étapes</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-content">
-                    <h3>1. Téléchargez</h3>
-                    <p>Cliquez sur le bouton principal ou sur le lien GitHub</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-content">
-                    <h3>2. Lancez</h3>
-                    <p>Double-cliquez sur <strong>Co-Chan.exe</strong> (aucune installation)</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-content">
-                    <h3>3. Recherchez</h3>
-                    <p>Exemples : <code>one piece vf</code> • <code>naruto shippuden vostfr</code></p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-content">
-                    <h3>4. Profitez</h3>
-                    <p>Les épisodes arrivent directement dans le dossier</p>
-                </div>
+<section id="features">
+    <h2>Fonctionnalités</h2>
+    <div class="grid">
+        <div class="card"><h3>Vitesse maximale</h3><p>Téléchargement direct depuis serveurs russes (sibnet) sans limitation</p></div>
+        <div class="card"><h3>VF & VOSTFR</h3><p>Choix instantané entre version française et sous-titres français</p></div>
+        <div class="card"><h3>Ultra-simple</h3><p>Une commande : nom de l’anime + version</p></div>
+        <div class="card"><h3>Portable</h3><p>Aucun installation • Windows & Android (Termux)</p></div>
+        <div class="card"><h3>Open Source</h3><p>Code 100% transparent sur GitHub</p></div>
+        <div class="card"><h3>Gratuit à vie</h3><p>Zéro pub • Zéro paywall</p></div>
+    </div>
+</section>
+
+<section id="how">
+    <h2>Utilisation en 4 étapes</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-content">
+                <h3>1. Téléchargez</h3>
+                <p>Cliquez sur le bouton principal ou sur le lien GitHub</p>
             </div>
         </div>
-    </section>
-
-    <section id="faq">
-        <h2>Questions fréquentes</h2>
-        <div class="faq-item">
-            <div class="faq-question">Est-ce légal ?<span>▼</span></div>
-            <div class="faq-answer">Co-Chan télécharge uniquement des fichiers déjà publics. L’usage reste sous votre responsabilité.</div>
+        <div class="step">
+            <div class="step-content">
+                <h3>2. Lancez</h3>
+                <p>Double-cliquez sur <strong>Co-Chan.exe</strong> (aucune installation)</p>
+            </div>
         </div>
-        <div class="faq-item">
-            <div class="faq-question">Windows Defender bloque le fichier ?<span>▼</span></div>
-            <div class="faq-answer">Non, l’exécutable est proprement compilé et signé, Windows Defender ne le bloque pas.</div>
+        <div class="step">
+            <div class="step-content">
+                <h3>3. Recherchez</h3>
+                <p>Exemples : <code>one piece vf</code> • <code>naruto shippuden vostfr</code></p>
+            </div>
         </div>
-        <div class="faq-item">
-            <div class="faq-question">Version Android disponible ?<span>▼</span></div>
-            <div class="faq-answer">Oui ! Script d’installation Termux dans le dépôt GitHub.</div>
+        <div class="step">
+            <div class="step-content">
+                <h3>4. Profitez</h3>
+                <p>Les épisodes arrivent directement dans le dossier</p>
+            </div>
         </div>
-        <div class="faq-item">
-            <div class="faq-question">Pourquoi sibnet ?<span>▼</span></div>
-            <div class="faq-answer">Serveurs russes parmi les plus rapides et stables pour les flux vidéo.</div>
-        </div>
-    </section>
+    </div>
+</section>
 
-    <section id="contact">
-        <h2>Une question ? Rejoignez le Discord</h2>
-        <p>Support instantané • Mises à jour • Communauté active</p>
-        <a href="https://discord.com/invite/tv2EZEYbax" target="_blank" class="discord-btn">REJOINDRE LE DISCORD</a>
-        <p style="margin-top:50px; color:var(--muted);">
-            <small>GitHub → <a href="https://github.com/Bicode-dev/anime_Co-Chan_download" target="_blank">github.com/Bicode-dev/anime_Co-Chan_download</a></small>
-        </p>
-    </section>
+<section id="faq">
+    <h2>Questions fréquentes</h2>
+    <div class="faq-item">
+        <div class="faq-question">Est-ce légal ?<span>▼</span></div>
+        <div class="faq-answer">Co-Chan télécharge uniquement des fichiers déjà publics. L’usage reste sous votre responsabilité.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Windows Defender bloque le fichier ?<span>▼</span></div>
+        <div class="faq-answer">Non, l’exécutable est proprement compilé et signé, Windows Defender ne le bloque pas.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Version Android disponible ?<span>▼</span></div>
+        <div class="faq-answer">Oui ! Script d’installation Termux dans le dépôt GitHub.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question">Pourquoi sibnet ?<span>▼</span></div>
+        <div class="faq-answer">Serveurs russes parmi les plus rapides et stables pour les flux vidéo.</div>
+    </div>
+</section>
 
-    <footer>
-        <p id="copyright">© 2024-<span id="current-year"></span> Co-Chan Anime Downloader • Open-source par Bicode-dev</p>
-    </footer>
+<section id="contact">
+    <h2>Une question ? Rejoignez le Discord</h2>
+    <p>Support instantané • Mises à jour • Communauté active</p>
+    <a href="https://discord.com/invite/tv2EZEYbax" target="_blank" class="discord-btn">REJOINDRE LE DISCORD</a>
+    <p style="margin-top:50px; color:#888888;">
+        <small>GitHub → <a href="https://github.com/Bicode-dev/anime_Co-Chan_download" target="_blank">github.com/Bicode-dev/anime_Co-Chan_download</a></small>
+    </p>
+</section>
 
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+<footer>
+    <p id="copyright">© 2024-<span id="current-year"></span> Co-Chan Anime Downloader • Open-source par Bicode-dev</p>
+</footer>
 
-        const particles = document.getElementById('particles');
-        for(let i = 0; i < 90; i++) {
-            const p = document.createElement('div');
-            p.classList.add('particle');
-            const size = Math.random() * 4 + 2;
-            p.style.width = p.style.height = size + 'px';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.animationDuration = Math.random() * 20 + 15 + 's';
-            p.style.animationDelay = Math.random() * 12 + 's';
-            particles.appendChild(p);
+<div id="error">ERR_CONNECTION_REFUSED
+HTTP 500: INTERNAL SERVER ERROR
+EXCEPTION_ACCESS_VIOLATION (0xC0000005)
+kernel32.dll crashed at 0x7C90120E
+SIGSEGV: Segmentation fault (core dumped)
+Out of memory: Kill process 9347
+FATAL: database connection lost</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // Matrix code rain
+    const canvas = document.getElementById('codeRain');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]();NULL0xDEADBEEF0xC0000005SIGSEGV404ERR';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function drawRain() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.font = fontSize + 'px monospace';
+        
+        for(let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            const color = Math.random() > 0.95 ? '#ffffff' : '#888888';
+            ctx.fillStyle = color;
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            
+            if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+    setInterval(drawRain, 33);
+
+    // Three.js scene
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x000000, 1, 15);
+    
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    document.body.appendChild(renderer.domElement);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.top = '0';
+    renderer.domElement.style.zIndex = '5';
+
+    // Lumières blanches inquiétantes (BOOST)
+    const whiteLight = new THREE.PointLight(0xffffff, 5, 50);
+    whiteLight.position.set(0, 0, 5);
+    scene.add(whiteLight);
+    
+    const grayLight = new THREE.PointLight(0x888888, 3, 50);
+    grayLight.position.set(0, 5, 0);
+    scene.add(grayLight);
+    
+    const flickerLight = new THREE.PointLight(0xaaaaaa, 4, 40);
+    flickerLight.position.set(5, -5, 3);
+    scene.add(flickerLight);
+
+    // Groupe principal
+    const logoGroup = new THREE.Group();
+
+    // Matériau gris
+    const grayMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xcccccc,
+        emissive: 0x444444,
+        emissiveIntensity: 0.5,
+        metalness: 0.8,
+        roughness: 0.2
+    });
+
+    const darkMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0x1a1a1a,
+        emissive: 0x666666,
+        emissiveIntensity: 0.2,
+        metalness: 0.9,
+        roughness: 0.1
+    });
+
+    // Crâne de code (icosaèdre déformé)
+    const skullGeometry = new THREE.IcosahedronGeometry(1, 1);
+    const skull = new THREE.Mesh(skullGeometry, grayMaterial);
+    skull.position.set(0, 0, 0);
+    logoGroup.add(skull);
+
+    // Wireframe qui pulse
+    const wireframeGeometry = new THREE.IcosahedronGeometry(1.2, 1);
+    const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff, 
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6
+    });
+    const wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+    logoGroup.add(wireframe);
+
+    // Fragments de code corrompu (BOOST x2)
+    for(let i = 0; i < 16; i++) {
+        const fragmentGeometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+        const fragment = new THREE.Mesh(fragmentGeometry, darkMaterial);
+        const angle = (Math.PI * 2 / 16) * i;
+        fragment.position.set(
+            Math.cos(angle) * 3,
+            Math.sin(angle) * 3,
+            Math.sin(angle * 2) * 2
+        );
+        fragment.userData = { angle: angle, speed: 0.03 + Math.random() * 0.03 };
+        logoGroup.add(fragment);
+    }
+
+    // Particules de corruption (BOOST x3)
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 3000;
+    const posArray = new Float32Array(particlesCount * 3);
+    
+    for(let i = 0; i < particlesCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 25;
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.05,
+        color: 0xaaaaaa,
+        transparent: true,
+        opacity: 0.9,
+        blending: THREE.AdditiveBlending
+    });
+    
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+
+    scene.add(logoGroup);
+    camera.position.z = 8;
+
+    let time = 0;
+    let glitchTimer = 0;
+
+    function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+        glitchTimer += 0.01;
+
+        // Rotation erratique du crâne (BOOST)
+        skull.rotation.x += 0.01 + Math.sin(time * 3) * 0.01;
+        skull.rotation.y += 0.02 + Math.cos(time * 4) * 0.02;
+        
+        // Pulse du wireframe (BOOST)
+        const pulse = 1 + Math.sin(time * 8) * 0.2;
+        wireframe.scale.set(pulse, pulse, pulse);
+        wireframe.rotation.x -= 0.03;
+        wireframe.rotation.y -= 0.03;
+
+        // Animation des fragments (BOOST)
+        logoGroup.children.forEach((child, index) => {
+            if(child.userData.angle !== undefined) {
+                child.userData.angle += child.userData.speed;
+                const radius = 3 + Math.sin(time * 2 + index) * 1;
+                child.position.x = Math.cos(child.userData.angle) * radius;
+                child.position.y = Math.sin(child.userData.angle) * radius;
+                child.position.z = Math.sin(child.userData.angle * 3 + time) * 3;
+                child.rotation.x += 0.08;
+                child.rotation.y += 0.08;
+                child.rotation.z += 0.05;
+            }
+        });
+
+        // Oscillation inquiétante (BOOST)
+        logoGroup.position.y = Math.sin(time * 3) * 0.5;
+        logoGroup.rotation.z = Math.sin(time * 2) * 0.2;
+
+        // Rotation des particules (BOOST)
+        particlesMesh.rotation.y += 0.003;
+        particlesMesh.rotation.x += 0.002;
+
+        // Lumières qui clignotent (BOOST)
+        whiteLight.intensity = 3 + Math.sin(time * 15) * 2;
+        whiteLight.position.x = Math.cos(time * 3) * 4;
+        whiteLight.position.z = Math.sin(time * 3) * 4;
+        
+        grayLight.intensity = 2 + Math.random() * 1.5;
+        
+        flickerLight.intensity = Math.random() > 0.5 ? 4 : 0.5;
+        flickerLight.position.x = Math.sin(time * 4) * 5;
+        flickerLight.position.y = Math.cos(time * 4) * 5;
+
+        // Glitch de la caméra (BOOST)
+        if(Math.random() > 0.95) {
+            camera.position.x = (Math.random() - 0.5) * 1;
+            camera.position.y = (Math.random() - 0.5) * 1;
+            camera.rotation.z = (Math.random() - 0.5) * 0.1;
+        } else {
+            camera.position.x *= 0.9;
+            camera.position.y *= 0.9;
+            camera.rotation.z *= 0.9;
         }
 
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                q.classList.toggle('active');
-                const answer = q.nextElementSibling;
-                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-            });
-        });
+        renderer.render(scene, camera);
+    }
+    animate();
 
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+    // Glitch du texte (BOOST)
+    const glitchText = document.getElementById('glitchText');
+    const errorTexts = ['CO-CHAN', 'C0-CH4N', 'C0_CH4N', 'ERR_404', '0xDEADBEEF', 'SEGFAULT', 'PANIC', 'FATAL', 'ABORT'];
+    setInterval(() => {
+        if(Math.random() > 0.6) {
+            glitchText.style.color = Math.random() > 0.5 ? '#ffffff' : '#888888';
+            glitchText.textContent = errorTexts[Math.floor(Math.random() * errorTexts.length)];
+            if(Math.random() > 0.8) {
+                glitchText.style.transform = `skew(${(Math.random()-0.5)*10}deg)`;
+            }
+        }
+    }, 80);
 
-        window.addEventListener('scroll', () => {
-            document.getElementById('nav').style.background = 
-                window.scrollY > 50 ? 'rgba(10,10,10,0.99)' : 'rgba(10,10,10,0.97)';
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Interaction souris - le logo fuit la souris
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth) * 2 - 1;
+        const y = -(e.clientY / window.innerHeight) * 2 + 1;
+        
+        logoGroup.position.x = -x * 2;
+        logoGroup.position.z = y * 2;
+    });
+
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    const particles = document.getElementById('particles');
+    for(let i = 0; i < 90; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 4 + 2;
+        p.style.width = p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = Math.random() * 20 + 15 + 's';
+        p.style.animationDelay = Math.random() * 12 + 's';
+        particles.appendChild(p);
+    }
+
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            q.classList.toggle('active');
+            const answer = q.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
         });
-    </script>
-</body>
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        document.getElementById('nav').style.background = 
+            window.scrollY > 50 ? 'rgba(0,0,0,0.99)' : 'rgba(0,0,0,0.97)';
+    });
+</script></body>
 </html>
+
