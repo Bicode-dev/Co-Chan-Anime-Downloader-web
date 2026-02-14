@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="N76Ki7R_5WipE4tEOG2oZNNSlbvRVD88x3Zr5Uo7gxA" />
-    <meta name="description" content="Co-Chan Anime Downloader - Téléchargeur VF/VOSTFR ultra-rapide via serveurs sibnet">
+    <meta name="description" content="Co-Chan Anime Downloader - Téléchargeur VF/VOSTFR ultra-rapide via serveurs sibnet, vidmoly et sendvid">
     <title>Co-Chan • Téléchargeur Anime VF & VOSTFR</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -330,6 +330,23 @@
         to { opacity: 1; }
     }
 
+    .license-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 16px;
+        margin: 12px 0;
+        font-size: 0.85rem;
+        color: var(--secondary);
+        transition: border-color 0.3s;
+    }
+    .license-badge:hover {
+        border-color: var(--secondary);
+    }
+
     .stars {
         position:fixed;
         top:0; left:0; width:100%; height:100%;
@@ -402,7 +419,7 @@
 
 <section id="hero">
     <h1>CO-CHAN</h1>
-    <p>Téléchargeur d’animes VF & VOSTFR ultra-rapide • Directement depuis des serveurs sibnet</p>
+    <p>Téléchargeur d'animes VF & VOSTFR ultra-rapide • Depuis de multiples serveurs internationaux</p>
     <a href="https://github.com/Bicode-dev/anime_Co-Chan_download/releases/download/Co-Chan_(%E2%97%8F'%E2%97%A1'%E2%97%8F)/Co-Chan.exe" class="btn-primary">
         TÉLÉCHARGER CO-CHAN.EXE
     </a>
@@ -411,9 +428,10 @@
 <section id="features">
     <h2>Fonctionnalités</h2>
     <div class="grid">
-        <div class="card"><h3>Vitesse maximale</h3><p>Téléchargement direct depuis serveurs russes (sibnet) sans limitation</p></div>
+        <div class="card"><h3>Vitesse maximale</h3><p>Téléchargement direct depuis de multiples serveurs internationaux sans limitation</p></div>
+        <div class="card"><h3>Multi-serveurs</h3><p>Sibnet, Vidmoly & Sendvid • Sélection automatique du serveur le plus rapide disponible</p></div>
         <div class="card"><h3>VF & VOSTFR</h3><p>Choix instantané entre version française et sous-titres français</p></div>
-        <div class="card"><h3>Ultra-simple</h3><p>Une commande : nom de l’anime + version</p></div>
+        <div class="card"><h3>Ultra-simple</h3><p>Une commande : nom de l'anime + version</p></div>
         <div class="card"><h3>Portable</h3><p>Aucun installation • Windows & Android (Termux)</p></div>
         <div class="card"><h3>Open Source</h3><p>Code 100% transparent sur GitHub</p></div>
         <div class="card"><h3>Gratuit à vie</h3><p>Zéro pub • Zéro paywall</p></div>
@@ -454,19 +472,19 @@
     <h2>Questions fréquentes</h2>
     <div class="faq-item">
         <div class="faq-question">Est-ce légal ?<span>▼</span></div>
-        <div class="faq-answer">Co-Chan télécharge uniquement des fichiers déjà publics. L’usage reste sous votre responsabilité.</div>
+        <div class="faq-answer">Co-Chan télécharge uniquement des fichiers déjà publics. L'usage reste sous votre responsabilité.</div>
     </div>
     <div class="faq-item">
         <div class="faq-question">Windows Defender bloque le fichier ?<span>▼</span></div>
-        <div class="faq-answer">Non, l’exécutable est proprement compilé et signé, Windows Defender ne le bloque pas.</div>
+        <div class="faq-answer">Co-Chan ne devrait jamais déclencher Windows Defender. Cependant, si une alerte apparaît sur votre machine, <strong>ne lancez pas le fichier</strong> et signalez-le nous immédiatement sur le Discord — nous investiguerons au plus vite.</div>
     </div>
     <div class="faq-item">
         <div class="faq-question">Version Android disponible ?<span>▼</span></div>
-        <div class="faq-answer">Oui ! Script d’installation Termux dans le dépôt GitHub.</div>
+        <div class="faq-answer">Oui ! Script d'installation Termux dans le dépôt GitHub.</div>
     </div>
     <div class="faq-item">
-        <div class="faq-question">Pourquoi sibnet ?<span>▼</span></div>
-        <div class="faq-answer">Serveurs russes parmi les plus rapides et stables pour les flux vidéo.</div>
+        <div class="faq-question">Quels serveurs sont utilisés ?<span>▼</span></div>
+        <div class="faq-answer">Co-Chan supporte trois serveurs : Sibnet, Vidmoly et Sendvid. Le meilleur serveur disponible est sélectionné automatiquement pour garantir la meilleure vitesse.</div>
     </div>
 </section>
 
@@ -480,11 +498,24 @@
 </section>
 
 <footer>
-    <p id="copyright">© 2024-<span id="current-year"></span> Co-Chan Anime Downloader • Open-source par Bicode-dev</p>
+    <p id="copyright">© 2026 Co-Chan Anime Downloader • les jeux mathis</p>
+
+    <div style="margin: 20px 0;">
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" class="license-badge">
+            🔒 CC BY-NC-ND 4.0 — Usage personnel uniquement • Pas de modification • Pas d'usage commercial
+        </a>
+    </div>
+
+    <p style="font-size:0.8rem; color:var(--muted); max-width:700px; margin:0 auto 30px;">
+        Ce logiciel est protégé par la licence
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" style="color:var(--secondary);">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International</a>.
+        Toute utilisation commerciale, modification ou redistribution est strictement interdite sans autorisation écrite de les jeux mathis.
+    </p>
+
     <div id="dmca" style="margin-top: 20px; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <h3>DMCA</h3>
+        <h3 style="color:var(--accent); margin-bottom:12px;">DMCA</h3>
         <p>Si vous estimez qu'un contenu accessible via notre site porte atteinte à vos droits, nous vous invitons à contacter directement la plateforme qui l'héberge avec une demande sérieuse de suppression accompagnée des informations suivantes :</p>
-        <ul>
+        <ul style="margin: 12px 0 12px 20px; list-style: disc; color:var(--muted);">
             <li>Une signature physique ou électronique d'une personne autorisée à agir au nom du titulaire du droit d'auteur concerné.</li>
             <li>Une identification précise de l'œuvre protégée.</li>
             <li>Une description claire du contenu supposé contrefaisant ainsi que son emplacement exact.</li>
@@ -496,8 +527,6 @@
 </footer>
 
 <script>
-    document.getElementById('current-year').textContent = new Date().getFullYear();
-
     const stars = document.getElementById('stars');
     for(let i = 0; i < 100; i++) {
         const star = document.createElement('div');
@@ -544,4 +573,3 @@
     });
 </script></body>
 </html>
-
